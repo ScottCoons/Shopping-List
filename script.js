@@ -16,7 +16,7 @@ function handleItemForm(event, formRef) {
     }
 
     addItemToShoppingList();
-
+    formRef.reset();
 
     return false;
 }
@@ -45,7 +45,11 @@ function createListItemHtml(itemName, itemAmount) {
                 ${itemName.value} - ${itemAmount.value}
                 <button id="button${id}" type={"button"}>Delete item</button>
             </li>';
+}
 
+function removeListItem(id) {
+    let listItem = document.getElementById("item"+id);
+    listItem.parentNode.removeChild(listItem);
 }
 
 function getRandomInt(min, max) {
