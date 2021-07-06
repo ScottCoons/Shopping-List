@@ -1,19 +1,18 @@
-window.onLoad = function () {
+window.onload = function () {
     initShoppingList();
 };
 
 function initShoppingList() {
     let form = document.getElementById("item-form");
-
+    console.log("failure point", form)
     form.addEventListener("submit", (event) => {
-        handleItemForm();
+        handleItemForm(event, form);
     })
 }
 
 function handleItemForm(event, formRef) {
-    if(event.preventDefault) {
         event.preventDefault();
-    }
+
 
     addItemToShoppingList();
     formRef.reset();
@@ -26,25 +25,25 @@ function addItemToShoppingList() {
     let itemAmount = document.getElementById("item-amount")
     let id = getRandomInt(0, 100000);
 
-    let itemHtml = createListItemHtml(itemName.value, itemAmount.value);
+    let itemHtml = createListItemHtml(itemName.value, itemAmount.value, id);
     console.log("Item HTML: ", itemHtml);
     let itemListRef = document.getElementById("shopping-list");
     itemListRef.insertAdjacentHTML("afterend", itemHtml);
+    setDeleteButtonEvent(id)
 }
 
 function setDeleteButtonEvent(id) {
     let deleteButton = document.getElementById("button"+id);
-    deleteButton.addEventsListener("click", () => {
-      console.log("DeleteButton Works");
+    deleteButton.addEventListener("click", () => {
+        removeListItem(id)
     })
 }
 
-function createListItemHtml(itemName, itemAmount) {
-    return '<li id="item${id}">
-                ${item Name} - ${itemAmount}
-                ${itemName.value} - ${itemAmount.value}
+function createListItemHtml(itemName, itemAmount, id) {
+    return `<li id="item${id}">
+                ${itemName} - ${itemAmount}
                 <button id="button${id}" type={"button"}>Delete item</button>
-            </li>';
+            </li>`;
 }
 
 function removeListItem(id) {
